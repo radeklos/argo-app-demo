@@ -1,0 +1,19 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: prehook-job
+  annotations:
+    argocd.argoproj.io/hook: PreSync
+spec:
+  successfulJobsHistoryLimit: 3
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: prehook-job
+              image: alpine:latest
+              command: [ "sleep", "10" ]
+          #          command: ["exit", "1"]
+          restartPolicy: Never
+  schedule: "* * * * *"

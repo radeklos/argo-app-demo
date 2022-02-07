@@ -1,0 +1,11 @@
+# additional resources like ingress rules, cluster and repository secrets.
+resources:
+  - deployment.yml
+  - service.yml
+  - namespace.yml
+#  - pre-sync-job.yml
+#  - cron-job.yml
+
+namespace: guestbook
+
+namePrefix: demo-
