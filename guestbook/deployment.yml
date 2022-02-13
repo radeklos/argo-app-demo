@@ -3,8 +3,8 @@ kind: Deployment
 metadata:
   name: guestbook-ui
 spec:
-  replicas: 3
-  revisionHistoryLimit: 5
+  replicas: 2
+  revisionHistoryLimit: 1
   selector:
     matchLabels:
       app: guestbook-ui
@@ -16,6 +16,9 @@ spec:
       containers:
         - image: radeklos/spring-demo-app
           name: guestbook-ui
+          env:
+            - name: DEMO_GREETING
+              value: "hello from the environment"
           ports:
             - containerPort: 8080
           readinessProbe:
@@ -28,3 +31,10 @@ spec:
               port: 8080
             initialDelaySeconds: 15
             periodSeconds: 20
+      initContainers:
+        - name: incr
+          image: redis
+          command: ['bash', '-c', 'echo "INCR init_incr" | redis-cli -h demo-redis -p 6379']
+        - name: launch-time
+          image: redis
+          command: ['bash', '-c', 'printf "LPUSH init_time %s" $(date --iso-8601=seconds) | redis-cli -h demo-redis -p 6379']
