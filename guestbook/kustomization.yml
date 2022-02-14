@@ -4,7 +4,7 @@ resources:
   - service.yml
   - namespace.yml
   - redis.yml
-#  - pre-sync-job.yml
+  - pre-sync-job.yml
 #  - cron-job.yml
 
 namespace: guestbook
